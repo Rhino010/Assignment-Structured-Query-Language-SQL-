@@ -1,0 +1,65 @@
+CREATE TABLE Members (
+    id INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT
+    -- Comma after INT needed to be removed to create the table
+);
+
+CREATE TABLE WorkoutSessions (
+    session_id INT PRIMARY KEY,
+    member_id INT,
+    session_date DATE,
+    session_time VARCHAR(50),
+    activity VARCHAR(255),
+    FOREIGN KEY (member_id) REFERENCES Members(id)
+);
+
+SELECT * FROM WorkoutSessions;
+SELECT * FROM Members;
+
+
+
+-- TASK 1
+-- The following will insert data into the Members data table
+INSERT INTO Members (id, name, age)
+VALUES 
+(1, 'Jessica Nolan', 35),
+(2, 'Ryan Schmidt', 42),
+(3, 'Kim Util', 19),
+(4, 'Jason Bourne', 32),
+(5, 'Jay Clayton', 15),
+(6, 'Shemarn Iriata', 76),
+(7, 'While E. Coyote', 54);
+
+-- The following will insert data in the WorkoutSessions data table
+INSERT INTO WorkoutSessions (session_id, member_id, session_date, session_time, activity)
+VALUES
+(212, 1, '2024-1-23', '4:00 pm', 'lower body power workout'),
+(213, 2, '2024-1-24', '4:30 pm', 'chest and back hypertrophy'),
+(214, 3, '2024-1-25', '5:00 pm', 'hiit cardio session'),
+(215, 4, '2024-1-26', '10:00 am', 'big three power session'),
+(216, 5, '2024-1-27', '11:00 am', 'sprint form tweaks'),
+(217, 6, '2024-1-28', '2:00 pm', 'lagging shoulder activation session'),
+(218, 7, '2024-1-28', '4:00 pm', 'hiit cardio session');
+
+
+
+-- TASK 2
+-- The following will update a session time for a member in the WorkoutSessions table
+-- session time for member_id 4 has been changed from '10:00 am' to '10:30 am'
+
+UPDATE WorkoutSessions
+SET session_time = '10:30 am'
+WHERE member_id = 4;
+
+
+
+-- TASK 3
+-- The following will delete member with id 4 from the Members table as well as delete the sessions tied to that key in the WorkoutSessions table
+-- Deleted the data tied to member_id 4 first since that is used as a foreign key in the workout sessions table
+DELETE FROM WorkoutSessions
+WHERE member_id = 4;
+
+-- After all sessions tied to member_id 4 in workout sessions have been deleted, we are now able to delete the member data from the members table.
+DELETE FROM Members
+WHERE id = 4;
